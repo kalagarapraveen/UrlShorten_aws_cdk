@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@main
     - name: Deploy code to Lambda
-      #uses: denzalman/lambda-python-action@v2.0.0
+      uses: kalagarapraveen/UrlShorten_aws_cdk@v1.0.1
       with:
         lambda_layer_arn: 'arn:aws:lambda:ap-south-1:028642144348:function:URLstack-urlshorternstg06C452BC-8WZW7B9Yj0hb'
         lambda_function_name: 'main'
