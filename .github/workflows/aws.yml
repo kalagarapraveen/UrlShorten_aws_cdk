@@ -1,39 +1,26 @@
-name: Deploy URL lambda 
-
+name: Deploy Python CDK Application
 on:
   push:
     branches:
       - main
 
 jobs:
-  aws_cdk:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@main
-
-    - name: Deploy code to Lambda
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key': ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-south-1
-      
-    - name: install npm
-      run: 'sudo apt update -y && sudo apt install nodejs npm -y'
-
-    - name: install aws_cdk
-      run: 'sudo npm install -g aws-cdk'
-
-    - name: install requirements
-      run: 'pip3 install -r requirements.txt'
-      working-directory: CDK-AWS
-
-    - name: CDK Synth
-      run: cdk synth
-      working-directory: CDK-AWS
-
-    - name: CDK Deploy Url stac
-      run: cdk deploy URLstack
-      working-directory: CDK-AWS
-
-      
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install AWS CDK
+        run: npm install -g aws-cdk
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+      - name: Deploy CDK stack
+        run: cdk deploy URLstack --require-approval never
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'ap-south-1'
