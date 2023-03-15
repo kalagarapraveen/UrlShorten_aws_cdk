@@ -1,5 +1,6 @@
 import boto3
 import hashlib
+import base64
 import json
 
 # Initialize the DynamoDB client
@@ -8,11 +9,10 @@ table = dynamodb.Table('shortened_urls')
 
 
 def shorten_url(url):
-    url_parts = urllib.parse.urlsplit(url)
-    base_url = url_parts.scheme + '://' + url_parts.netloc + url_parts.path
-    query_string = url_parts.query
-    # Generate a unique hash for the URL
-    url_hash = hashlib.sha256(base_url.encode()).hexdigest()[:8]
+    hash_object = hashlib.sha256(url.encode())
+    hash_value = hash_object.digest()
+    encoded_hash = base64.urlsafe_b64encode(hash_value).decode()
+    url_hash = encoded_hash[:8]
     # Store the shortened URL in the database
     table.put_item(
         Item={
@@ -21,9 +21,7 @@ def shorten_url(url):
         }
     )
     # Return the shortened URL to the client
-    shortened_url = base_url + '/' + url_hash
-    if query_string:
-        shortened_url += '?' + query_string
+    shortened_url =  'https://47yog43oux5eeyrmdc7bwfh4eu0ynryi.lambda-url.ap-south-1.on.aws/api/getUrl/?hash=' + url_hash
     return {
         'statusCode': 200,
         'body': shortened_url

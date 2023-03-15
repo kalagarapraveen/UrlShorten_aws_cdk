@@ -11,7 +11,11 @@ jobs:
     steps:
     - uses: actions/checkout@main
     - name: Deploy code to Lambda
-      uses: kalagarapraveen/UrlShorten_aws_cdk@v1.0.1
+      run:
+        - python3 -m venv .venv
+        - source .venv/bin/activate
+        - python3 -m pip install -r requirements.txt
+
       with:
         lambda_layer_arn: 'arn:aws:lambda:ap-south-1:028642144348:function:URLstack-urlshorternstg06C452BC-8WZW7B9Yj0hb'
         lambda_function_name: 'main'
