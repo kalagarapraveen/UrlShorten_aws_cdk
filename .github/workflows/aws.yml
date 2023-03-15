@@ -19,7 +19,7 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r requirements.txt
       - name: Add os Variables
-        run: export CDK_DEFAULT_ACCOUNT_PERSONAL=${{ secrets.CDK_DEFAULT_ACCOUNT_PERSONAL }}
+        run: export CDK_DEFAULT_ACCOUNT_PERSONAL=028642144348
       - name: Deploy CDK stack
         run: cdk deploy URLstack --require-approval never
         env:
