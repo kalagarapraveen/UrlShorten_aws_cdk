@@ -32,7 +32,7 @@ jobs:
       run: cdk synth
       working-directory: CDK-AWS
 
-    - name: CDK Deploy Url stack
+    - name: CDK Deploy Url stac
       run: cdk deploy URLstack
       working-directory: CDK-AWS
 
