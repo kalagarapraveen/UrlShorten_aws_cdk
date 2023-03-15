@@ -6,21 +6,34 @@ on:
       - main
 
 jobs:
-  deploy:
+  aws_cdk:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
-    - name: Deploy code to Lambda
-      run:
-        - python3 -m venv .venv
-        - source .venv/bin/activate
-        - python3 -m pip install -r requirements.txt
 
+    - name: Deploy code to Lambda
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        lambda_layer_arn: 'arn:aws:lambda:ap-south-1:028642144348:function:URLstack-urlshorternstg06C452BC-8WZW7B9Yj0hb'
-        lambda_function_name: 'main'
-        lambda_region: ${{ secrets.REGION }}
-        requirements_txt: 'requirements.txt'
-      env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.REGION }}
+      
+    - name: install npm
+      run: 'sudo apt update -y && sudo apt install nodejs npm -y'
+
+    - name: install aws_cdk
+      run: 'sudo npm install -g aws-cdk'
+
+    - name: install requirements
+      run: 'pip3 install -r requirements.txt'
+      working-directory: CDK-AWS
+
+    - name: CDK Synth
+      run: cdk synth
+      working-directory: CDK-AWS
+
+    - name: CDK Deploy Url stack
+      run: cdk deploy URLstack
+      working-directory: CDK-AWS
+
+      
