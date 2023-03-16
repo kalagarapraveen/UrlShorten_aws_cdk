@@ -56,3 +56,16 @@ command.
  * `cdk docs`        open CDK documentation
 
 Enjoy!
+
+To shorten the url use below curl command
+
+
+        curl --location --request GET 'https://47yog43oux5eeyrmdc7bwfh4eu0ynryi.lambda-url.ap-south-1.on.aws/api/shortenUrl' \
+        --header 'Content-Type: text/plain' \
+        --data-raw '{"url":"https://repost.aws/questions/QUJEkp61w7TcuMcA8DiBYhgA/add-dynamo-db-access-permission-to-lambda-function-in-cdk"}'
+
+or Use the attached postman collection file 
+
+        /url.postman_collection.json
+
+Once we execute first api we will be recieving the hashed url when we open it will directly redirect us to the main 'url'

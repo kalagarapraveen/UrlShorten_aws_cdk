@@ -1,0 +1,53 @@
+{
+	"info": {
+		"_postman_id": "cb492051-569f-48ae-bf7d-63dd763d32a2",
+		"name": "url",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23871249"
+	},
+	"item": [
+		{
+			"name": "url_short'",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-amz-content-sha256",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "x-amz-date",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"url\":\"https://repost.aws/questions/QUJEkp61w7TcuMcA8DiBYhgA/add-dynamo-db-access-permission-to-lambda-function-in-cdk\"}"
+				},
+				"url": {
+					"raw": "https://47yog43oux5eeyrmdc7bwfh4eu0ynryi.lambda-url.ap-south-1.on.aws/api/shortenUrl",
+					"protocol": "https",
+					"host": [
+						"47yog43oux5eeyrmdc7bwfh4eu0ynryi",
+						"lambda-url",
+						"ap-south-1",
+						"on",
+						"aws"
+					],
+					"path": [
+						"api",
+						"shortenUrl"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
