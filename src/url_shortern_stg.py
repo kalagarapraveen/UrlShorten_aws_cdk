@@ -1,6 +1,8 @@
 import boto3
 import hashlib
 import base64
+import webbrowser
+import urllib.request
 import json
 
 # Initialize the DynamoDB client
@@ -33,10 +35,14 @@ def redirect_url(url_hash):
     response = table.get_item(Key={'url_hash': url_hash})
     if 'Item' in response:
         original_url = response['Item']['url']
+        opener = urllib.request.build_opener(urllib.request.HTTPRedirectHandler)
+        response = opener.open(original_url)
         return {
-            'statusCode': 200,
-            'body': json.dumps({'url': original_url})
+        'statusCode': 301,
+        'headers': {'Location': response.url},
+        'body': ''
         }
+        
     else:
         return {
             'statusCode': 404,
@@ -62,7 +68,7 @@ def main(event, context):
         return shorten_url(url)
 
         
-    elif path == '/api/getUrl':
+    elif path == '/api/getUrl/':
         # Handle GET request to get original URL from shortened URL
          url_hash = event['queryStringParameters']['hash']
          return redirect_url(url_hash)
