@@ -17,7 +17,7 @@ UrlLayersStack(app, "UrlLayersStack", env=cdk.Environment(
 
 
 URLstack(app, "URLstack", env=cdk.Environment(
-    account=os.environ['CDK_DEFAULT_ACCOUNT_PERSONAL'],
+    account='${{ secrets.CDK_DEFAULT_ACCOUNT_PERSONAL }}', #os.environ['CDK_DEFAULT_ACCOUNT_PERSONAL'],
     region=os.environ['CDK_DEFAULT_REGION']
     ), description="URL Layers stack that creates Lambda layer for URL shorten project"
 )
